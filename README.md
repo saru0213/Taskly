@@ -43,12 +43,11 @@ The **Taskly** is a simple yet powerful task management tool designed to help us
 
 
 ## Setup & Installation
-     ```bash
+     
 1. Clone the repository
 2. Navigate into the project folder
 3. Install dependencies
-4. Start the development server
-   npm start
+4. Start the development server: npm start
 5. Open your browser and navigate to:
     http://localhost:3000
 
