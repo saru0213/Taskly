@@ -6,16 +6,13 @@ import bcrypt from "bcryptjs";
 
 export function Authentication({ isAuthenticated, user, onLogin, onLogout }) {
   const handleLogin = async (values) => {
-    // Get existing users from localStorage
     const existingUsers = JSON.parse(
       localStorage.getItem("registeredUsers") || "[]"
     );
 
-    // Check if user exists
     const userExists = existingUsers.find((u) => u.email === values.email);
 
     if (!userExists) {
-      // Create new user with hashed password
       const salt = bcrypt.genSaltSync(10);
       const hashedPassword = bcrypt.hashSync(values.password, salt);
 
@@ -29,7 +26,6 @@ export function Authentication({ isAuthenticated, user, onLogin, onLogout }) {
 
       onLogin({ email: values.email });
     } else {
-      // Verify existing user's password
       const isPasswordValid = bcrypt.compareSync(
         values.password,
         userExists.password
@@ -38,7 +34,6 @@ export function Authentication({ isAuthenticated, user, onLogin, onLogout }) {
       if (isPasswordValid) {
         onLogin({ email: values.email });
       } else {
-        // Handle invalid password (you might want to add error handling)
         alert("Invalid password");
       }
     }
@@ -47,8 +42,8 @@ export function Authentication({ isAuthenticated, user, onLogin, onLogout }) {
   return (
     <div className="bg-gradient-to-r from-primary-100 to-primary-200 p-6 shadow-sm">
       {isAuthenticated ? (
-        <div className="flex justify-between items-center">
-          <div className="flex items-center space-x-4">
+        <div className="flex flex-col sm:flex-row justify-between items-center">
+          <div className="flex items-center space-x-4 mb-4 sm:mb-0">
             <UserCircleIcon className="text-primary-600 w-10 h-10" />
             <div>
               <h2 className="text-lg font-semibold text-primary-900">
@@ -61,12 +56,11 @@ export function Authentication({ isAuthenticated, user, onLogin, onLogout }) {
           </div>
           <button
             onClick={onLogout}
-            title="Log Out here.."
-            className="flex items-center space-x-2 bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 transition-colors"
+            title="Log Out"
+            className="flex items-center justify-center bg-red-500 text-white p-2 rounded-full hover:bg-red-600 transition-colors"
           >
-            <LogOutIcon className="w-5 h-5" />
-
-            <span>Logout</span>
+            <span className="hidden sm:block">Logout</span>
+            <LogOutIcon className="w-6 h-6 sm:hidden" />
           </button>
         </div>
       ) : (
@@ -129,16 +123,13 @@ export function Authentication({ isAuthenticated, user, onLogin, onLogout }) {
 
                 <button
                   type="submit"
-                  title="login here"
+                  title="Login here"
                   disabled={isSubmitting || !isValid}
-                  className={`
-                    w-full py-2 rounded-md transition-colors 
-                    ${
-                      isValid
-                        ? "bg-primary-500 text-white hover:bg-primary-600"
-                        : "bg-gray-300 text-gray-500 cursor-not-allowed"
-                    }
-                  `}
+                  className={`w-full py-2 rounded-md transition-colors ${
+                    isValid
+                      ? "bg-primary-500 text-white hover:bg-primary-600"
+                      : "bg-gray-300 text-gray-500 cursor-not-allowed"
+                  }`}
                 >
                   Login
                 </button>
